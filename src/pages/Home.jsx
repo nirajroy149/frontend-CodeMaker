@@ -68,7 +68,11 @@ function Form() {
       toast.error("ROOM ID & UserName is required!");
       return;
     }
-    navigate(`/editor/${roomId}`);
+    navigate(`/editor/${roomId}`, {
+      state: {
+        userName,
+      },
+    });
   };
   const handleKeyUp = (e) => {
     const keyPressed = e.code; // gives which key is pressed

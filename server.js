@@ -57,6 +57,17 @@ io.on("connection", (socket) => {
     });
   });
 
+  // when code change in a particular room
+  socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+    // broadcasting
+    socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
+
+  // syncing code whenever new user joins the room
+  socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
+    io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
+
   // when a client disconnect a room
   socket.on("disconnecting", () => {
     // getting all the rooms

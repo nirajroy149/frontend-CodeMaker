@@ -17,6 +17,7 @@ function EditorPage() {
   const [loading, setLoading] = useState(false);
   // socket
   const socketRef = useRef(null);
+  const codeRef = useRef(null);
   const location = useLocation();
   const reactNavigator = useNavigate();
   const { roomId } = useParams();
@@ -49,9 +50,12 @@ function EditorPage() {
         ({ clients, userName, socketId }) => {
           if (userName !== location.state?.userName) {
             toast.success(`${userName} joined the room.`);
-            console.log(`${userName} has joined`);
           }
           setUser(clients);
+          socketRef.current.emit(ACTIONS.SYNC_CODE, {
+            code: codeRef.current,
+            socketId,
+          });
         }
       );
 
@@ -67,6 +71,13 @@ function EditorPage() {
     init();
 
     // here all on(listner) function should be cleand up =>otherwise leads to memory leak
+
+    // useEffect cleaning function
+    return () => {
+      socketRef.current.disconnect();
+      socketRef.current.off(ACTIONS.JOINED);
+      socketRef.current.off(ACTIONS.DISCONNECTED);
+    };
   }, []);
 
   useEffect(() => {
@@ -85,11 +96,17 @@ function EditorPage() {
       <>
         <div className="flex text-white h-auto min-h-screen w-full bg-gradient-to-br from-black to-blue-950">
           {/* sidebar */}
-          <SideBar open={open} setOpen={setOpen} user={user} />
+          <SideBar roomId={roomId} open={open} setOpen={setOpen} user={user} />
 
           {/* editor */}
           <div className="pl-7 pt-7 p-7  text-2xl font-semibold flex-1 h-auto linear-gradient(rgb(17, 24, 39), rgb(75, 85, 99))">
-            <Editor />
+            <Editor
+              roomId={roomId}
+              socketRef={socketRef}
+              onCodeChange={(code) => {
+                codeRef.current = code;
+              }}
+            />
           </div>
         </div>
       </>

@@ -19,10 +19,11 @@ import "codemirror/theme/shadowfox.css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
+import ACTIONS from "../Actions";
 
-function Editor() {
+function Editor({ socketRef, roomId, onCodeChange }) {
   const editorRef = useRef(null);
-  // const [theme, setTheme] = useState("dracula");
+
   const themeOptions = [
     "dracula",
     "3024-day",
@@ -69,9 +70,42 @@ function Editor() {
           lineNumbers: true,
         }
       );
+
+      /// this will be executed when the value of textarea change.
+      //on change here is the event listner of the codemirror
+      // instances => editor instance
+      editorRef.current.on("change", (instance, changes) => {
+        //origin will be +input if something is added
+        //orign will be paste if something is pasted
+        //origin will be cut if someting is deleted from textarea.
+        const { origin } = changes;
+        //getting all the content of editor.
+        const code = instance.getValue();
+        onCodeChange(code);
+        if (origin !== "setValue") {
+          socketRef.current.emit(ACTIONS.CODE_CHANGE, {
+            roomId,
+            code,
+          });
+        }
+      });
     }
     init();
   }, []);
+
+  useEffect(() => {
+    if (socketRef.current) {
+      socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
+        if (code != null) {
+          editorRef.current.setValue(code);
+        }
+      });
+    }
+
+    return () => {
+      socketRef.current.off(ACTIONS.CODE_CHANGE);
+    };
+  }, [socketRef.current]);
 
   return (
     <>
@@ -82,10 +116,7 @@ function Editor() {
         themeOptions={themeOptions}
       />
 
-      <textarea
-        id="editor-textArea"
-        // value={"function HelloWorld(){ \n\tconsole.log(hello);\n}"}
-      ></textarea>
+      <textarea id="editor-textArea"></textarea>
     </>
   );
 }

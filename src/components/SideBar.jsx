@@ -3,8 +3,26 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import Profile from "./Profile";
 import { AiOutlineCopy } from "react-icons/ai";
 import { BiExit } from "react-icons/bi";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-function SideBar({ setOpen, open, user }) {
+function SideBar({ setOpen, open, user, roomId }) {
+  const reactNavigator = useNavigate();
+  // navigator has all the access of microphone, camera etc. present in the browser
+  async function copyRoomId() {
+    try {
+      await navigator.clipboard.writeText(roomId);
+      toast.success("Room ID has been copied!, Share it with your friends.");
+    } catch (err) {
+      toast.error("Could not copy the Room ID");
+      console.log(err);
+    }
+  }
+
+  function leaveRoom() {
+    reactNavigator("/");
+  }
+
   return (
     <>
       <div
@@ -39,10 +57,16 @@ function SideBar({ setOpen, open, user }) {
         {/* button */}
         {open ? (
           <div className={`flex flex-col gap-3 `}>
-            <button className="px-6 py-2  bg-white text-gray-900 border-4 border-dashed border-gray-500 font-semibold rounded-lg cursor-copy hover:bg-gray-300 duration-300">
+            <button
+              onClick={copyRoomId}
+              className="px-6 py-2  bg-white text-gray-900 border-4 border-dashed border-gray-500 font-semibold rounded-lg cursor-copy hover:bg-gray-300 duration-300"
+            >
               Copy Room Id
             </button>{" "}
-            <button className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-700 duration-300">
+            <button
+              onClick={leaveRoom}
+              className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-700 duration-300"
+            >
               Leave
             </button>
           </div>
@@ -50,11 +74,13 @@ function SideBar({ setOpen, open, user }) {
           <div className={`flex flex-col gap-3 items-center `}>
             {" "}
             <AiOutlineCopy
+              onClick={copyRoomId}
               size={35}
               title="Copy room id."
               className="text-blue-500 cursor-pointer"
             />
             <BiExit
+              onClick={leaveRoom}
               size={35}
               title="Leave room."
               className="text-red-500 cursor-pointer"

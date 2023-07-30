@@ -9,12 +9,12 @@ function Profile({ user, open }) {
         {user.map((u) => {
           return (
             <div
-              key={u.id}
+              key={u.socketId}
               className="cursor-pointer gap-1 flex flex-col items-center hover:scale-110 duration-150"
             >
-              <Avatar name={u.name} size="50" className="rounded-lg" />
+              <Avatar name={u.userName} size="50" className="rounded-lg" />
               <p className="text-sm text-gray-100 text-left sm:text-center">
-                {u.name}
+                {u.userName}
               </p>
             </div>
           );

@@ -8,23 +8,23 @@ function EditorPage({}) {
   const [open, setOpen] = useState(true);
   const [user, setUser] = useState([
     {
-      id: 1,
-      name: "Niraj Roy",
+      socketId: 1,
+      userName: "Niraj Roy",
     },
     {
-      id: 2,
-      name: "Ayush Jha",
+      socketId: 2,
+      userName: "Ayush Jha",
     },
     {
-      id: 3,
-      name: "Sushil Roy",
+      socketId: 3,
+      userName: "Sushil Roy",
     },
     {
-      id: 4,
-      name: "Sahul Jha",
+      socketId: 4,
+      userName: "Sahul Jha",
     },
   ]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {

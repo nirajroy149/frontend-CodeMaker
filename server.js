@@ -4,13 +4,15 @@ const http = require("http");
 const { Server } = require("socket.io");
 const dotenv = require("dotenv");
 const ACTIONS = require("./src/Actions");
+const path = require("path");
 
 const server = http.createServer(app);
 const io = new Server(server);
 dotenv.config();
 
-app.get("/", (req, res) => {
-  res.send("hello wld!");
+app.use(express.static("build"));
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 // stores the mapping of userName and sockeid
@@ -33,7 +35,7 @@ function getAllConnectedClientes(roomId) {
 
 // on any Socket connection
 io.on("connection", (socket) => {
-  console.log("socket connected", socket.id);
+  // console.log("socket connected", socket.id);
 
   // when a user joins the socket
   socket.on(ACTIONS.JOIN, ({ roomId, userName }) => {
@@ -85,7 +87,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`Server is listening at PORT ${PORT}`);
 });

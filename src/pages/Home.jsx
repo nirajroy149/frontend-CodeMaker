@@ -131,13 +131,12 @@ function Form() {
         <div>
           <h4 className="mt-3 text-center">
             If you don't have an invite then create{" "}
-            <a
-              href={"#"}
+            <button
               className="underline hover:text-blue-950 cursor-pointer text-blue-700 font-bold"
               onClick={createNewRoom}
             >
               new room
-            </a>
+            </button>
           </h4>
         </div>
       </div>

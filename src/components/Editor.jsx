@@ -91,20 +91,24 @@ function Editor({ socketRef, roomId, onCodeChange }) {
       });
     }
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
+    // let socketRef = null;
     if (socketRef.current) {
       socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        if (code != null) {
+        if (code !== null) {
           editorRef.current.setValue(code);
         }
       });
     }
 
     return () => {
+      // eslint-disable-next-line
       socketRef.current.off(ACTIONS.CODE_CHANGE);
     };
+    // eslint-disable-next-line
   }, [socketRef.current]);
 
   return (

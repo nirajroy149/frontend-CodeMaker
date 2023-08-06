@@ -24,7 +24,7 @@
   "scripts": {
     "start:front": "react-scripts start",
     "start": "npm run --openssl-legacy-provider server:prod",
-    "build": "npm install && react-scripts --openssl-legacy-provider build",
+    "build": "npm install --openssl-legacy-provider && react-scripts --openssl-legacy-provider build",
     "server:dev": "nodemon server.js",
     "server:prod": "node server.js",
     "test": "react-scripts test",

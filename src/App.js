@@ -5,7 +5,7 @@ import EditorPage from "./pages/EditorPage";
 import { Toaster } from "react-hot-toast";
 // import Footer from "./components/Footer";
 // using react-router-dom
-// "/editor/:roomId" => here rooId is dynamic for room id denoted by ':'
+// "/editor/:roomId" => here roomId is dynamic for room id denoted by ':'
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
 import Profile from "./Profile";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { AiOutlineCopy } from "react-icons/ai";
 import { BiExit } from "react-icons/bi";
 import { toast } from "react-hot-toast";

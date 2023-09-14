@@ -20,6 +20,7 @@ function Home() {
 }
 
 function Form() {
+  // framer motion
   const containerVariants = {
     hidden: {
       x: "-100%",

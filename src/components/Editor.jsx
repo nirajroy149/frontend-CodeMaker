@@ -40,6 +40,7 @@ function Editor({ socketRef, roomId, onCodeChange }) {
     "seti",
     "shadowfox",
   ];
+
   const modeOptions = {
     javascript: { name: "javascript", json: true },
     python: { name: "python" },
@@ -63,7 +64,8 @@ function Editor({ socketRef, roomId, onCodeChange }) {
       editorRef.current = Codemirror.fromTextArea(
         document.getElementById("editor-textArea"),
         {
-          mode: modeOptions.javascript,
+          // mode: modeOptions.javascript,
+          mode: { name: "javascript", json: true },
           theme: "dracula",
           autoCloseTag: true,
           autoCloseBrackets: true,
@@ -71,8 +73,8 @@ function Editor({ socketRef, roomId, onCodeChange }) {
         }
       );
 
-      /// this will be executed when the value of textarea change.
-      //on change here is the event listner of the codemirror
+      // this will be executed when the value of textarea change.
+      // on change here is the event listner of the codemirror
       // instances => editor instance
       editorRef.current.on("change", (instance, changes) => {
         //origin will be +input if something is added

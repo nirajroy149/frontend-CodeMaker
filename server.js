@@ -6,8 +6,11 @@ const dotenv = require("dotenv");
 const ACTIONS = require("./src/Actions");
 const path = require("path");
 
+//creating server
 const server = http.createServer(app);
 const io = new Server(server);
+
+// including .env
 dotenv.config();
 
 const __dirname1 = path.resolve();

@@ -14,15 +14,15 @@ import ACTIONS from "../Actions";
 
 function EditorPage() {
   const [open, setOpen] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState([]);
+
   // socket
   const socketRef = useRef(null);
   const codeRef = useRef(null);
   const location = useLocation();
   const reactNavigator = useNavigate();
   const { roomId } = useParams();
-
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const init = async () => {

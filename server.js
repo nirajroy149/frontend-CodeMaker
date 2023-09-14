@@ -20,6 +20,15 @@ app.use(express.static(path.join(__dirname1, "/build")));
 //   res.sendFile(path.join(__dirname, "build", "index.html"));
 // });
 
+// Allow requests from a specific origin
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://example.com'); // Replace with your allowed origin
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
+
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname1, "build", "index.html"));
 });
